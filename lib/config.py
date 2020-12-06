@@ -141,7 +141,7 @@ class Config:
             elif path == 'i':
                 self.__download_volatility__()
                 path = "./tools/volatility"
-                cprint("Volatility successfully downloaded in {0}.\n".format(path))
+                cprint("Volatility successfully downloaded in {0}.\n".format(path), 'green')
                 break
             elif not os.path.isdir(path):
                 cprint(
