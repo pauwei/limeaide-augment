@@ -89,6 +89,10 @@ class Limeaide:
             help="Skip the profiler by providing the distribution, kernel\
             version, and architecture of the remote client.")
 
+        #Info Options
+        parser.add_argument("-l", "--list", action="store_true", help="List Available \
+            profiles and loadable kernel modules (.ko).")
+
         return parser.parse_args()
 
     @staticmethod
@@ -160,6 +164,20 @@ class Limeaide:
 
         return client
 
+    @staticmethod
+    def __get_info__(config, profiler):
+        """Return information that does not require capture tool
+
+            Will exit if capture tool is not needed
+        """
+
+        if '-l' in sys.argv or '--list' in sys.argv:
+            profiler.list_profiles()
+            sys.exit()
+
+
+
+
     def display_header(self):
         cprint(
             """\
@@ -190,6 +208,7 @@ class Limeaide:
         profiler = Profiler(config)
         profiler.load_profiles()
 
+        self.__get_info__(config, profiler)
         args = self.__get_args__()
         client = self.__get_client__(args, config)
 

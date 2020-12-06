@@ -215,3 +215,20 @@ class Profiler(object):
                             return profile
 
         return None
+
+    def list_profiles(self):
+        """List profiles available for user to see
+
+        Print the profiles, otherwise print empty
+        """
+
+        num_profiles = len(self.profiles)
+        if num_profiles > 0:
+            print("Available profiles stored in " + self.profiles_dir)
+            for i, profile in enumerate(self.profiles):
+                print(
+                    "%i) %s, %s, %s\t" %
+                    (i, profile['distro'], profile['kver'],
+                    profile['arch']))
+        else:
+            print("No profiles available to list.\n")
