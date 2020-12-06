@@ -88,6 +88,25 @@ class Config:
                 "LiME failed to download. Check your internet connection" +
                 " or place manually", 'red'))
 
+    def __download_volatility__(self):
+        """Download Volatility from GitHub"""
+        
+        cprint("Downloading Volatility", "green")
+        try:
+            urllib.request.urlretrieve(
+                "https://github.com/volatilityfoundation/volatility/archive/master.zip",
+                filename="./tools/volatility_master.zip")
+            zip_volatility = zipfile.ZipFile("./tools/volatility_master.zip", 'r')
+            zip_volatility.extractall(self.tools_dir)
+            zip_volatility.close()
+            shutil.move(
+                './tools/volatility-master', './tools/volatility/')
+        except urllib.error.URLError:
+            sys.exit(colored(
+                "Volatility failed to download. Check your internet connection " +
+                " or place manually", 'red'))
+
+
     def __write_new_config__(self):
         """Write a new configuration file on first run."""
 
@@ -108,15 +127,21 @@ class Config:
         cprint("Volatility directory missing.", 'red')
         cprint("Please provide a path to your Volatility directory." +
                "\ne.g. '~/volatility/'" +
-               "\n[q] to never ask again: ", 'green')
+               "\n[q] to never ask again: " +
+               "\n[i] to download volatility: ", 'green')
 
         path_ext = '/volatility/plugins/overlays/linux/'
 
         while True:
-            path = input(":")
+            path = input(": ")
             if path == 'q':
                 path = 'None'
                 path_ext = ''
+                break
+            elif path == 'i':
+                self.__download_volatility__()
+                path = "./tools/volatility"
+                cprint("Volatility successfully downloaded in {0}.\n".format(path))
                 break
             elif not os.path.isdir(path):
                 cprint(

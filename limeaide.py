@@ -197,7 +197,8 @@ class Limeaide:
                 self.__version__), 'green', attrs=['bold'])
         print(
             "LiMEaide is licensed under GPL-3.0\n"
-            "LiME is licensed under GPL-2.0\n")
+            "LiME is licensed under GPL-2.0\n"
+            "Volatility is licensed under GPL-2.0\n")
 
     def main(self):
         """Start the interactive session for LiMEaide."""
