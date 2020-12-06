@@ -59,14 +59,25 @@ class VolDeploy(object):
 
         cprint("> Obtaining symbols", 'blue')
 
+        dwarfpy = input("Do you have dwarfdump installed? [y/n] ")
+
         dwarf_file = open(
             self.client.output_dir + self.client.profile['kver'] +
             '.dwarf', 'w+')
-        sp = Popen(
-            ['dwarfdump', '-d', '-i',
-                self.config.profile_dir + self.client.profile['module']],
-            stdout=dwarf_file)
-        sp.wait()
+        
+        if dwarfpy.lower() == 'y':
+            sp = Popen(
+                ['dwarfdump', '-d', '-i',
+                    self.config.profile_dir + self.client.profile['module']],
+                stdout=dwarf_file)
+            sp.wait()
+        else:
+            #use linux binary of dwarfdump
+            sp = Popen(
+                ['../binary/dwarfdump', '-d', '-i',
+                    self.config.profile_dir + self.client.profile['module']],
+                stdout=dwarf_file)
+            sp.wait()
         dwarf_file.flush()
 
         pf = Popen(
