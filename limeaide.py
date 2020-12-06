@@ -156,7 +156,7 @@ class Limeaide:
             client.key = args.key
             cprint("> Please enter key pass phrase", 'blue')
 
-        client.pass_ = getpass.getpass()
+        client.pass_ = getpass.getpass("[sudo] password for " + client.user + ": ")
 
         return client
 
