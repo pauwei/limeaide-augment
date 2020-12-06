@@ -173,9 +173,47 @@ class Limeaide:
 
         if '-l' in sys.argv or '--list' in sys.argv:
             profiler.list_profiles()
+            sys.exit()          
+        elif '--write-client' in sys.argv:
+            client = Client()
+            client.read_config()
+            while True:
+                print(
+                    "Current Configurations\n"
+                    "IP:\t\t{}\n".format(client.ip) +
+                    "Port:\t\t{}\n".format(client.port) +
+                    "User:\t\t{}\n".format(client.user) +
+                    "Output:\t\t{}\n".format(client.output) +
+                    "Format:\t\t{}\n".format(client.format) +
+                    "Digest:\t\t{}\n".format(client.digest) +
+                    "Compress:\t{}\n".format(client.compress))
+                
+                setconfig = input("Which of the configurations would you like to set? ")
+
+                if setconfig.lower() == 'ip':
+                    client.ip = input("IP => ")
+                elif setconfig.lower() == 'port':
+                    client.port = input("Port => ")
+                elif setconfig.lower() == 'user':
+                    client.user = input("User => ")
+                elif setconfig.lower() == 'output':
+                    client.output = input("Output => ")
+                elif setconfig.lower() == 'format':
+                    client.format = input("Format => ")
+                elif setconfig.lower() == 'digest':
+                    client.digest = input("Digest => ")
+                elif setconfig.lower() == 'compress':
+                    client.compress = input("Compress => ")
+                else:
+                    print("Invalid configuration!")
+
+                client.write_config(False)
+                print("{} configuration has been set!".format(setconfig))
+
+                if input("\nQuit? [y/n]: ").lower() == 'y':
+                    break
+
             sys.exit()
-
-
 
 
     def display_header(self):

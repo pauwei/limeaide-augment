@@ -141,7 +141,7 @@ class Config:
             elif path == 'i':
                 self.__download_volatility__()
                 path = "./tools/volatility"
-                cprint("Volatility successfully downloaded in {0}.\n".format(path), 'green')
+                cprint("Volatility successfully downloaded in {}.\n".format(path), 'green')
                 break
             elif not os.path.isdir(path):
                 cprint(
@@ -149,7 +149,7 @@ class Config:
                     " again", 'red')
             elif not os.path.isdir(path + path_ext):
                 cprint(
-                    "This is a directory but it".format(path) +
+                    "This is a directory but it{}".format(path) +
                     "doesn't include the required " +
                     "subdirectories: \n{0}".format(path_ext), 'red')
             else:
