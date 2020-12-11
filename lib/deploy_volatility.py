@@ -22,6 +22,7 @@ import logging
 import shutil
 
 from subprocess import Popen
+from subprocess import run
 from termcolor import cprint
 
 
@@ -72,12 +73,23 @@ class VolDeploy(object):
                 stdout=dwarf_file)
             sp.wait()
         else:
-            #use linux binary of dwarfdump
-            sp = Popen(
-                ['../binary/dwarfdump', '-d', '-i',
-                    self.config.profile_dir + self.client.profile['module']],
-                stdout=dwarf_file)
-            sp.wait()
+            dwarfin = input("Would you like to install dwarfdump? [y/n] ")
+            
+            if dwarfin.lower() == 'y':
+                subprocess.run('apt install dwarfdump');
+                print("Successfully installed dwarfdump!");
+                sp = Popen(
+                    ['dwarfdump', '-d', '-i',
+                        self.config.profile_dir + self.client.profile['module']],
+                    stdout=dwarf_file)
+                sp.wait()
+            else:
+                #use linux binary of dwarfdump
+                sp = Popen(
+                    ['../binary/dwarfdump', '-d', '-i',
+                        self.config.profile_dir + self.client.profile['module']],
+                    stdout=dwarf_file)
+                sp.wait()
         dwarf_file.flush()
 
         pf = Popen(
